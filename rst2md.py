@@ -569,6 +569,41 @@ _BLOCK: dict[type, ty.Callable[[Context, ty.Any], str]] = {
 }
 
 
+def parse_rst(name: str, data: str) -> nodes.document:
+    """Parse a reStructuredText document, with the Sphinx stubs registered.
+
+    :param name: The path of the source document, used to resolve includes.
+    :param data: The contents of the source document.
+    :returns: The document tree.
+    :raises docutils.utils.SystemMessage: docutils reported a warning or
+        worse, e.g. an unknown role.
+    """
+    _register_sphinx_stubs()
+    return core.publish_doctree(
+        data,
+        source_path=name,
+        settings_overrides={
+            # leave syntax highlighting to the Markdown renderer
+            'syntax_highlight': 'none',
+            # keep the document title as a heading
+            'doctitle_xform': False,
+            'halt_level': 2,
+        },
+    )
+
+
+def convert_doctree_to_md(document: nodes.document) -> str:
+    """Convert a parsed document to Markdown.
+
+    :param document: The document tree, as returned by :func:`parse_rst`.
+    :returns: The converted document.
+    :raises UnsupportedNode: The document holds a node with no Markdown
+        conversion.
+    """
+    ctx = Context(document, _section_anchors(document))
+    return _convert_blocks(ctx, document.children).strip()
+
+
 def convert_rst_to_md(name: str, data: str) -> str:
     """Convert a reStructuredText document to Markdown.
 
@@ -584,20 +619,7 @@ def convert_rst_to_md(name: str, data: str) -> str:
     :raises docutils.utils.SystemMessage: docutils reported a warning or
         worse, e.g. an unknown role.
     """
-    _register_sphinx_stubs()
-    document = core.publish_doctree(
-        data,
-        source_path=name,
-        settings_overrides={
-            # leave syntax highlighting to the Markdown renderer
-            'syntax_highlight': 'none',
-            # keep the document title as a heading
-            'doctitle_xform': False,
-            'halt_level': 2,
-        },
-    )
-    ctx = Context(document, _section_anchors(document))
-    return _convert_blocks(ctx, document.children).strip()
+    return convert_doctree_to_md(parse_rst(name, data))
 
 
 if __name__ == '__main__':
