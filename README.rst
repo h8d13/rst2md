@@ -4,9 +4,7 @@ rst2md
 
 A utility and library to convert a reStructuredText document to Markdown.
 
-.. note::
-
-   This is tested against pinned documents (``tests/data/fetch.sh``)
+This is tested against pinned documents (``tests/data/fetch.sh``)
 
 .. note::
 
