@@ -1,0 +1,3 @@
+[submodule "tests/rst2txt"]
+	path = tests/rst2txt
+	url = https://github.com/stephenfin/rst2txt.git

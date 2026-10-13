@@ -4,7 +4,9 @@ rst2md
 
 A utility and library to convert a reStructuredText document to Markdown.
 
-This is tested against pinned documents (``tests/data/fetch.sh``)
+This is tested against pinned documents (``tests/data/fetch.sh``), and against
+`rst2txt <https://github.com/stephenfin/rst2txt>`__ (a git submodule): both
+writers must output the same words from the same document.
 
 .. note::
 
@@ -47,4 +49,5 @@ Testing
 
 .. code-block:: bash
 
+    git submodule update --init
     uvx tox
