@@ -47,4 +47,4 @@ Testing
 
 .. code-block:: bash
 
-    tox -e py
+    uvx tox
