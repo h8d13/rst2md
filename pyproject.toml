@@ -10,7 +10,7 @@ dynamic = ["version", "description"]
 dependencies = [
     "docutils",
 ]
-requires-python = ">= 3.9"
+requires-python = ">= 3.10"
 
 [project.urls]
 Home = "https://github.com/stephenfin/rst2md"

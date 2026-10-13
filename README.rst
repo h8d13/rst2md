@@ -6,20 +6,19 @@ A utility and library to convert a reStructuredText document to Markdown.
 
 .. note::
 
-   This has been tested on a number of documents, but as of yet no test suite exists so it is likely
-   incomplete.
+   This is tested against pinned documents (``tests/data/fetch.sh``)
 
 .. note::
 
-   Only plain reStructuredText documents are supported. There is no support for Sphinx extensions or
-   similar.
+   Sphinx documents are partially supported: the roles and directives used by the CPython
+   documentation are rendered as Sphinx displays them. Links with a URL in the source are kept.
 
 Installation
 ------------
 
 .. code-block::
 
-    pip install --user rst2md
+    uv pip install rst2md
 
 Usage
 -----
@@ -44,3 +43,10 @@ From the command line:
 .. code-block:: bash
 
     python -m rst2md README.rst
+
+Testing
+-------
+
+.. code-block:: bash
+
+    tox -e py
